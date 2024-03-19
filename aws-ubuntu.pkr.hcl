@@ -43,11 +43,11 @@ build {
     environment_vars = [
       "FOO=hello world",
     ]
-    script = "install_redis.sh"
+    script = "scripts/install_redis.sh"
   }
 
   provisioner "shell" {
-    script = "install_nginx.sh"
+    script = "scripts/install_nginx.sh"
   }
 
   provisioner "shell" {
