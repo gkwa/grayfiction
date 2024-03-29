@@ -1,3 +1,7 @@
+# grafiction
+
+Learn to use [packer](https://www.packer.io/) to create vm images.
+
 ```bash
 packer --help
 packer fmt .
