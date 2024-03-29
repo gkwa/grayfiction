@@ -4,8 +4,11 @@ packer fmt .
 packer init .
 
 # this works
-packer build -var-file=variables.json aws-ubuntu.pkr.hcl
+time packer build -var-file=variables.json aws-ubuntu.pkr.hcl -force
+
+# add timestamps to logs
+time packer build -force -timestamp-ui -var-file=variables.json aws-ubuntu.pkr.hcl -force
 
 # while iterating -force helps
-packer build -var-file=variables.json aws-ubuntu.pkr.hcl -force
+time packer build -var-file=variables.json aws-ubuntu.pkr.hcl -force
 ```
