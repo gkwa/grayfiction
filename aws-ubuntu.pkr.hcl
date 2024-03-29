@@ -15,26 +15,48 @@ variable "subnet_id" {
   type = string
 }
 
+locals {
+  timestamp = formatdate("YYYY-MM-DD", timestamp())
+}
+
 source "amazon-ebs" "ubuntu" {
-  ami_name      = "learn-packer-linux-aws"
-  instance_type = "t2.micro"
+  ami_name      = "northflier-${local.timestamp}"
+  instance_type = "t2.small"
   region        = "us-west-2"
+
   source_ami_filter {
     filters = {
-      name                = "ubuntu/images/*ubuntu-jammy-22.04-amd64-server-*"
+      name                = "ubuntu/images/*ubuntu-focal-*-amd64-server-*"
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
     most_recent = true
     owners      = ["099720109477"]
   }
+
   ssh_username = "ubuntu"
   vpc_id       = var.vpc_id
   subnet_id    = var.subnet_id
+
+  launch_block_device_mappings {
+    device_name           = "/dev/sda1"
+    volume_size           = 20
+    volume_type           = "gp3"
+    delete_on_termination = true
+  }
+
+  run_tags = {
+    Name = "northflier-packer-build"
+  }
+
+  tags = {
+    Name = "northflier-${local.timestamp}"
+  }
 }
 
 build {
-  name = "learn-packer"
+  name = "northflier"
+
   sources = [
     "source.amazon-ebs.ubuntu"
   ]
@@ -43,16 +65,11 @@ build {
     environment_vars = [
       "FOO=hello world",
     ]
-    script = "scripts/install_redis.sh"
+    script = "install_northflier.sh"
   }
 
-  provisioner "shell" {
-    script = "scripts/install_nginx.sh"
-  }
-
-  provisioner "shell" {
-    inline = [
-      "echo \"FOO is $FOO\" > example.txt",
-    ]
+  post-processor "manifest" {
+    output     = "northflier.json"
+    strip_path = true
   }
 }
