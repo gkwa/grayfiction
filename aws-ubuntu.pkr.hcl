@@ -23,6 +23,7 @@ source "amazon-ebs" "ubuntu" {
   ami_name      = "northflier-${local.timestamp}"
   instance_type = "t2.small"
   region        = "us-west-2"
+  ami_regions   = ["us-west-2", "us-west-1"]
 
   source_ami_filter {
     filters = {
