@@ -72,4 +72,9 @@ build {
     output     = "northflier.json"
     strip_path = true
   }
+  post-processor "shell-local" {
+    inline = [
+      "echo 'AMI Name: northflier-${local.timestamp}'"
+    ]
+  }
 }
