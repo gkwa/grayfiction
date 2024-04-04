@@ -1,2 +1,2 @@
 run:
-	time packer build -force -timestamp-ui -var-file=variables.json aws-ubuntu.pkr.hcl
+	time packer build -force -timestamp-ui -color=false -var-file=variables.json aws-ubuntu.pkr.hcl | tee build.log
