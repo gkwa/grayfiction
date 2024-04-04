@@ -15,6 +15,14 @@ variable "subnet_id" {
   type = string
 }
 
+variable "AccessKeyId" {
+  type = string
+}
+
+variable "SecretAccessKey" {
+  type = string
+}
+
 locals {
   timestamp = formatdate("YYYY-MM-DD", timestamp())
 }
@@ -37,6 +45,9 @@ source "amazon-ebs" "ubuntu" {
   ssh_username = "ubuntu"
   vpc_id       = var.vpc_id
   subnet_id    = var.subnet_id
+
+  access_key    = var.AccessKeyId
+  secret_key    = var.SecretAccessKey
 
   launch_block_device_mappings {
     device_name           = "/dev/sda1"

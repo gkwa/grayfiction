@@ -28,3 +28,26 @@ resource "aws_iam_role_policy" "cloudwatch_logs" {
   role   = aws_iam_role.role.id
   policy = file("${path.module}/policies/cloudwatch_logs.json")
 }
+
+resource "aws_iam_role_policy" "delete_images" {
+  name = "${var.name}-delete-images"
+  role = aws_iam_role.role.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "ec2:DeregisterImage",
+          "ec2:DescribeImages"
+        ]
+        Resource = "*"
+        Condition = {
+          StringLike = {
+            "ec2:Name" = "northflier-???-??-??"
+          }
+        }
+      }
+    ]
+  })
+}
