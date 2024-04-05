@@ -25,7 +25,7 @@ locals {
 
 source "amazon-ebs" "ubuntu" {
   ami_name      = "northflier-${local.timestamp}"
-  instance_type = "t3.xlarge"
+  instance_type = "t3.small"
   region        = "us-west-2"
 
   access_key = local.creds.AccessKeyId
