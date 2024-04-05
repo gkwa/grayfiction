@@ -1,50 +1,50 @@
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": ["ec2:RunInstances"],
-            "Resource": "arn:aws:ec2:*:*:instance/*",
-            "Condition": {
-                "StringEquals": {
-                    "aws:RequestTag/Name": "grayfiction"
-                }
-            }
-        },
-        {
-            "Effect": "Allow",
-            "Action": ["ec2:DescribeInstances", "ec2:DescribeTags", "ec2:DescribeRegions"],
-            "Resource": "*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": ["ec2:TerminateInstances"],
-            "Resource": "arn:aws:ec2:*:*:instance/*",
-            "Condition": {
-                "StringEquals": {
-                    "ec2:ResourceTag/Name": "grayfiction"
-                }
-            }
-        },
-        {
-            "Effect": "Allow",
-            "Action": ["ec2:CreateTags"],
-            "Resource": "arn:aws:ec2:*:*:instance/*",
-            "Condition": {
-                "StringEquals": {
-                    "ec2:CreateAction": "RunInstances"
-                }
-            }
-        },
-        {
-            "Effect": "Allow",
-            "Action": ["ec2:DeregisterImage", "ec2:DescribeImages"],
-            "Resource": "*",
-            "Condition": {
-                "StringLike": {
-                    "ec2:Name": "northflier-???-??-??"
-                }
-            }
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Effect": "Allow",
+          "Action": [
+              "ec2:RunInstances"
+          ],
+          "Resource": "arn:aws:ec2:*:*:instance/*",
+          "Condition": {
+              "StringEquals": {
+                  "aws:RequestTag/Name": "grayfiction"
+              }
+          }
+      },
+      {
+          "Effect": "Allow",
+          "Action": [
+              "ec2:DescribeInstances",
+              "ec2:DescribeTags"
+          ],
+          "Resource": "*"
+      },
+      {
+          "Effect": "Allow",
+          "Action": [
+              "ec2:TerminateInstances"
+          ],
+          "Resource": "arn:aws:ec2:*:*:instance/*",
+          "Condition": {
+              "StringEquals": {
+                  "ec2:ResourceTag/Name": "grayfiction"
+              }
+          }
+      },
+      {
+          "Effect": "Allow",
+          "Action": [
+              "ec2:CreateTags"
+          ],
+          "Resource": "arn:aws:ec2:*:*:instance/*",
+          "Condition": {
+              "ForAllValues:StringEquals": {
+                  "aws:TagKeys": ["Name"],
+                  "aws:RequestTag/Name": "grayfiction"
+              }
+          }
+      }
+  ]
 }
