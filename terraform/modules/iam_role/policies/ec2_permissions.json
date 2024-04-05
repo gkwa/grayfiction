@@ -6,7 +6,7 @@
           "Action": [
               "ec2:RunInstances"
           ],
-          "Resource": "*",
+          "Resource": "arn:aws:ec2:*:*:instance/*",
           "Condition": {
               "StringEquals": {
                   "aws:RequestTag/Name": "grayfiction"
@@ -26,7 +26,7 @@
           "Action": [
               "ec2:TerminateInstances"
           ],
-          "Resource": "*",
+          "Resource": "arn:aws:ec2:*:*:instance/*",
           "Condition": {
               "StringEquals": {
                   "ec2:ResourceTag/Name": "grayfiction"
@@ -38,9 +38,10 @@
           "Action": [
               "ec2:CreateTags"
           ],
-          "Resource": "*",
+          "Resource": "arn:aws:ec2:*:*:instance/*",
           "Condition": {
-              "StringEquals": {
+              "ForAllValues:StringEquals": {
+                  "aws:TagKeys": ["Name"],
                   "aws:RequestTag/Name": "grayfiction"
               }
           }
