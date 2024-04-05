@@ -51,20 +51,3 @@ resource "aws_iam_role_policy" "delete_images" {
     ]
   })
 }
-
-resource "aws_iam_role_policy" "describe_regions" {
-  name = "${var.name}-describe-regions"
-  role = aws_iam_role.role.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "ec2:DescribeRegions"
-        ]
-        Resource = "*"
-      }
-    ]
-  })
-}

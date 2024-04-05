@@ -12,9 +12,8 @@ provider "aws" {
 }
 
 module "iam_user" {
-  source           = "./modules/iam_user"
-  name             = "grayfiction"
-  iam_boundary_arn = aws_iam_policy.permission_boundary.arn
+  source = "./modules/iam_user"
+  name   = "grayfiction"
 }
 
 module "iam_role" {
@@ -27,35 +26,4 @@ module "iam_group" {
   name      = "grayfiction"
   user_name = module.iam_user.user_name
   role_name = module.iam_role.role_name
-}
-
-resource "aws_iam_policy" "permission_boundary" {
-  name        = "grayfiction-permission-boundary"
-  path        = "/"
-  description = "Permission boundary policy"
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "ec2:*"
-        ]
-        Resource = "*"
-        Condition = {
-          StringEquals = {
-            "ec2:ResourceTag/Name": "grayfiction"
-          }
-        }
-      },
-      {
-        Effect = "Allow"
-        Action = [
-          "ec2:DescribeRegions"
-        ]
-        Resource = "*"
-      }
-    ]
-  })
 }

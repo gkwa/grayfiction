@@ -3,7 +3,6 @@ resource "aws_iam_user" "user" {
   tags = {
     Name = var.name
   }
-  permissions_boundary = var.iam_boundary_arn
 }
 
 resource "aws_iam_user_policy_attachment" "user" {
