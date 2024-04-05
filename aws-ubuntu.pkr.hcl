@@ -19,17 +19,10 @@ locals {
   timestamp = formatdate("YYYY-MM-DD", timestamp())
 }
 
-locals {
-  creds = jsondecode(file("creds.json"))
-}
-
 source "amazon-ebs" "ubuntu" {
   ami_name      = "northflier-${local.timestamp}"
-  instance_type = "t3.small"
+  instance_type = "t2.small"
   region        = "us-west-2"
-
-  access_key = local.creds.AccessKeyId
-  secret_key = local.creds.SecretAccessKey
 
   source_ami_filter {
     filters = {
@@ -63,6 +56,7 @@ source "amazon-ebs" "ubuntu" {
 
 build {
   name = "northflier"
+
   sources = [
     "source.amazon-ebs.ubuntu"
   ]
@@ -78,7 +72,6 @@ build {
     output     = "northflier.json"
     strip_path = true
   }
-
   post-processor "shell-local" {
     inline = [
       "echo 'AMI Name: northflier-${local.timestamp}'"
