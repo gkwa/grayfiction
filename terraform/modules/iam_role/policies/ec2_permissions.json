@@ -34,6 +34,19 @@
           }
       },
       {
+          "Effect": "Deny",
+          "Action": [
+              "ec2:StopInstances",
+              "ec2:TerminateInstances"
+          ],
+          "Resource": "arn:aws:ec2:*:*:instance/*",
+          "Condition": {
+              "StringNotEquals": {
+                  "ec2:ResourceTag/Name": "grayfiction"
+              }
+          }
+      },
+      {
           "Effect": "Allow",
           "Action": [
               "ec2:CreateTags"
@@ -41,7 +54,9 @@
           "Resource": "arn:aws:ec2:*:*:instance/*",
           "Condition": {
               "ForAllValues:StringEquals": {
-                  "aws:TagKeys": ["Name"],
+                  "aws:TagKeys": [
+                      "Name"
+                  ],
                   "aws:RequestTag/Name": "grayfiction"
               }
           }

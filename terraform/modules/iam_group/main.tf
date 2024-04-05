@@ -8,11 +8,6 @@ resource "aws_iam_group_membership" "group_membership" {
   group = aws_iam_group.group.name
 }
 
-resource "aws_iam_group_policy_attachment" "group_policy_attachment" {
-  group      = aws_iam_group.group.name
-  policy_arn = "arn:aws:iam::aws:policy/PowerUserAccess"
-}
-
 resource "aws_iam_group_policy" "assume_role_policy" {
   name  = "${var.name}-assume-role"
   group = aws_iam_group.group.id
