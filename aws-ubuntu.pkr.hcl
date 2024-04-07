@@ -19,10 +19,6 @@ locals {
   timestamp = formatdate("YYYY-MM-DD", timestamp())
 }
 
-locals {
-  creds = jsondecode(file("creds.json"))
-}
-
 source "amazon-ebs" "ubuntu" {
   ami_name      = "northflier-${local.timestamp}"
   instance_type = "t2.small"
@@ -38,8 +34,6 @@ source "amazon-ebs" "ubuntu" {
     owners      = ["099720109477"]
   }
 
-  access_key = local.creds.AccessKeyId
-  secret_key = local.creds.SecretAccessKey
   ssh_username = "ubuntu"
   vpc_id       = var.vpc_id
   subnet_id    = var.subnet_id
