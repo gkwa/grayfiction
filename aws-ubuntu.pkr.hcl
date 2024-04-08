@@ -22,6 +22,7 @@ variable "ami_name_prefix" {
 variable "source_ami" {
   type = object({
     filter_name  = string
+    owners       = list(string)
     ssh_username = string
   })
 }
@@ -32,6 +33,11 @@ variable "instance_type" {
 
 variable "region" {
   type = string
+}
+
+variable "spot_price" {
+  type    = string
+  default = ""
 }
 
 locals {
@@ -49,12 +55,12 @@ source "amazon-ebs" "ubuntu" {
       virtualization-type = "hvm"
     }
     most_recent = true
-    owners      = ["099720109477"]
+    owners      = var.source_ami.owners
   }
   ssh_username = var.source_ami.ssh_username
   vpc_id       = var.vpc_id
   subnet_id    = var.subnet_id
-  spot_price   = "auto"
+  spot_price   = var.spot_price != "" ? var.spot_price : "auto"
   launch_block_device_mappings {
     device_name           = "/dev/sda1"
     volume_size           = 20

@@ -4,8 +4,10 @@
  "ami_name_prefix": "myproject",
  "source_ami": {
    "filter_name": "ubuntu/images/*ubuntu-focal-*-amd64-server-*",
+   "owners": ["099720109477"],
    "ssh_username": "ubuntu"
  },
  "instance_type": "t2.small",
- "region": "us-west-2"
+ "region": "us-west-2",
+ "spot_price": "auto"
 }
