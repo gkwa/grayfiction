@@ -31,6 +31,10 @@ variable "instance_type" {
   type = string
 }
 
+variable "provision_script" {
+  type = string
+}
+
 variable "region" {
   type = string
 }
@@ -84,7 +88,7 @@ build {
     environment_vars = [
       "FOO=hello world",
     ]
-    script = "install_${var.ami_name_prefix}.sh"
+    script = "${var.provision_script}"
   }
   post-processor "manifest" {
     output     = "${var.ami_name_prefix}.json"
