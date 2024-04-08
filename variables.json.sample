@@ -9,6 +9,6 @@
  },
  "instance_type": "t2.small",
  "region": "us-west-2",
- "provsioner_script": "myprovisioner.sh",
+ "provsioner_script": "provision.sh",
  "spot_price": "auto"
 }
