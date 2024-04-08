@@ -19,7 +19,18 @@ variable "ami_name_prefix" {
   type = string
 }
 
-variable "source_ami_filter_name" {
+variable "source_ami" {
+  type = object({
+    filter_name  = string
+    ssh_username = string
+  })
+}
+
+variable "instance_type" {
+  type = string
+}
+
+variable "region" {
   type = string
 }
 
@@ -29,18 +40,18 @@ locals {
 
 source "amazon-ebs" "ubuntu" {
   ami_name      = "${var.ami_name_prefix}-${local.timestamp}"
-  instance_type = "t2.small"
-  region        = "us-west-2"
+  instance_type = var.instance_type
+  region        = var.region
   source_ami_filter {
     filters = {
-      name                = var.source_ami_filter_name
+      name                = var.source_ami.filter_name
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
     most_recent = true
     owners      = ["099720109477"]
   }
-  ssh_username = "ubuntu"
+  ssh_username = var.source_ami.ssh_username
   vpc_id       = var.vpc_id
   subnet_id    = var.subnet_id
   spot_price   = "auto"
