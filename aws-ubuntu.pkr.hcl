@@ -44,14 +44,27 @@ variable "spot_price" {
   default = ""
 }
 
+variable "force_deregister" {
+  type    = bool
+  default = false
+}
+
+variable "force_delete_snapshot" {
+  type    = bool
+  default = false
+}
+
 locals {
   timestamp = formatdate("YYYY-MM-DD", timestamp())
 }
 
 source "amazon-ebs" "ubuntu" {
-  ami_name      = "${var.ami_name_prefix}-${local.timestamp}"
-  instance_type = var.instance_type
-  region        = var.region
+  ami_name              = "${var.ami_name_prefix}-${local.timestamp}"
+  instance_type         = var.instance_type
+  region                = var.region
+  force_deregister      = var.force_deregister
+  force_delete_snapshot = var.force_delete_snapshot
+
   source_ami_filter {
     filters = {
       name                = var.source_ami.filter_name

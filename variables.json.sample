@@ -7,6 +7,8 @@
    "owners": ["099720109477"],
    "ssh_username": "ubuntu"
  },
+ "force_deregister": false,
+ "force_delete_snapshot": false,
  "instance_type": "t2.small",
  "region": "us-west-2",
  "provsioner_script": "provision.sh",
