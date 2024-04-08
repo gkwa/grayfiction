@@ -1,4 +1,6 @@
 {
-  "vpc_id": "vpc-12345678",
-  "subnet_id": "subnet-87654321"
+ "vpc_id": "vpc-12345678",
+ "subnet_id": "subnet-87654321",
+ "ami_name_prefix": "myproject",
+ "source_ami_filter_name": "ubuntu/images/*ubuntu-focal-*-amd64-server-*"
 }
