@@ -60,10 +60,14 @@ locals {
 
 source "amazon-ebs" "ubuntu" {
   ami_name              = "${var.ami_name_prefix}-${local.timestamp}"
+  force_delete_snapshot = var.force_delete_snapshot
+  force_deregister      = var.force_deregister
   instance_type         = var.instance_type
   region                = var.region
-  force_deregister      = var.force_deregister
-  force_delete_snapshot = var.force_delete_snapshot
+  spot_price            = var.spot_price != "" ? var.spot_price : "auto"
+  ssh_username          = var.source_ami.ssh_username
+  subnet_id             = var.subnet_id
+  vpc_id                = var.vpc_id
 
   source_ami_filter {
     filters = {
@@ -74,16 +78,14 @@ source "amazon-ebs" "ubuntu" {
     most_recent = true
     owners      = var.source_ami.owners
   }
-  ssh_username = var.source_ami.ssh_username
-  vpc_id       = var.vpc_id
-  subnet_id    = var.subnet_id
-  spot_price   = var.spot_price != "" ? var.spot_price : "auto"
+
   launch_block_device_mappings {
     device_name           = "/dev/sda1"
     volume_size           = 20
     volume_type           = "gp3"
     delete_on_termination = true
   }
+
   run_tags = {
     Name = "${var.ami_name_prefix}-packer-build"
   }
