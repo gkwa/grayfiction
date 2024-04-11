@@ -87,9 +87,17 @@ source "amazon-ebs" "ubuntu" {
   }
 
   run_tags = {
-    Name = "${var.ami_name_prefix}-packer-build"
+    Name    = "${var.ami_name_prefix}-packer-build"
+    Creator = "packer"
+  }
+  run_volume_tags = {
+    Creator = "packer"
+  }
+  snapshot_tags = {
+    Creator = "packer"
   }
   tags = {
+    Creator : "packer"
     Name = "${var.ami_name_prefix}-${local.timestamp}"
   }
 }
