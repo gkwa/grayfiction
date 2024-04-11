@@ -54,6 +54,11 @@ variable "force_delete_snapshot" {
   default = false
 }
 
+variable "volume_size" {
+  type    = number
+  default = 8
+}
+
 locals {
   timestamp = formatdate("YYYY-MM-DD", timestamp())
 }

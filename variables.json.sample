@@ -12,5 +12,6 @@
  "instance_type": "t2.small",
  "region": "us-west-2",
  "provsioner_script": "provision.sh",
+ "volume_size": 8,
  "spot_price": "auto"
 }
