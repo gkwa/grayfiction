@@ -15,5 +15,5 @@ unzip ringgem-master.zip -d .
 ls -la ringgem-master
 
 for i in {1..5}; do
-  sudo task --dir=ringgem-master --verbose northflier
+  sudo task --output=interleaved --dir=ringgem-master --verbose northflier
 done
