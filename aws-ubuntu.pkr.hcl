@@ -112,6 +112,14 @@ build {
   sources = [
     "source.amazon-ebs.ubuntu"
   ]
+
+  provisioner "shell" {
+    inline = [
+      "echo 'Waiting for dns...'",
+      "timeout 30s curl --retry 9999 --connect-timeout 1 -sSf https://www.google.com >/dev/null",
+    ]
+  }
+
   provisioner "shell" {
     environment_vars = [
       "FOO=hello world",
