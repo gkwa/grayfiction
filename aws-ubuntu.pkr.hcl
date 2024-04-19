@@ -126,6 +126,12 @@ build {
     ]
     script = "${var.provision_script}"
   }
+
+  provisioner "shell" {
+    inline            = ["sudo reboot"]
+    expect_disconnect = true
+  }
+
   post-processor "manifest" {
     output     = "${var.ami_name_prefix}.json"
     strip_path = true
