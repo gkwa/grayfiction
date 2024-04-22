@@ -1,0 +1,3 @@
+[submodule "ringgem"]
+	path = ringgem
+	url = https://github.com/taylormonacelli/ringgem
