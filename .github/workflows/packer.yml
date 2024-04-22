@@ -33,3 +33,7 @@ jobs:
         AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
         AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
         AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+    - name: Cleanup Packer Resources
+      if: ${{ failure() || cancelled() }}
+      run: |
+        pkill packer
