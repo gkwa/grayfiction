@@ -8,12 +8,12 @@ packer {
 }
 
 variable "vpc_id" {
-  type = string
+  type    = string
   default = env("AWS_VPC_ID")
 }
 
 variable "subnet_id" {
-  type = string
+  type    = string
   default = env("AWS_SUBNET_ID")
 }
 
@@ -38,7 +38,7 @@ variable "provision_script" {
 }
 
 variable "region" {
-  type = string
+  type    = string
   default = env("AWS_DEFAULT_REGION")
 }
 
