@@ -76,6 +76,7 @@ source "amazon-ebs" "ubuntu" {
   ssh_username          = var.source_ami.ssh_username
   subnet_id             = var.subnet_id
   vpc_id                = var.vpc_id
+  reuse                 = true
 
   source_ami_filter {
     filters = {
