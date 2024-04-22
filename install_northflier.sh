@@ -4,7 +4,7 @@ set -e
 set -x
 set -u
 
-echo CWD=$(pwd)
+export ORIGCWD=$(pwd)
 
 sudo apt-get update
 DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes git curl
@@ -12,7 +12,7 @@ DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes git curl
 # install go-task
 curl -fsSL https://raw.githubusercontent.com/taylormonacelli/ringgem/master/install-go-task-on-linux.sh | sudo bash
 
-gray=$CWD/grayfiction
+gray=$ORIGCWD/grayfiction
 ringgem=$gray/ringgem
 git clone --depth 1 https://github.com/taylormonacelli/grayfiction $gray
 
