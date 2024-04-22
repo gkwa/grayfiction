@@ -4,6 +4,8 @@ set -e
 set -x
 set -u
 
+echo CWD=$(pwd)
+
 sudo apt-get update
 DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes git curl
 
