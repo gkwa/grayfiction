@@ -10,6 +10,8 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
+      with:
+        submodules: 'true'
     - name: Setup `packer`
       uses: hashicorp/setup-packer@main
       id: setup
