@@ -76,7 +76,6 @@ source "amazon-ebs" "ubuntu" {
   ssh_username          = var.source_ami.ssh_username
   subnet_id             = var.subnet_id
   vpc_id                = var.vpc_id
-  reuse                 = true
 
   source_ami_filter {
     filters = {
@@ -140,6 +139,7 @@ build {
     output     = "${var.ami_name_prefix}.json"
     strip_path = true
   }
+
   post-processor "shell-local" {
     inline = [
       "echo 'AMI Name: ${var.ami_name_prefix}-${local.timestamp}'"
