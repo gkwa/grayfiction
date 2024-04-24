@@ -21,5 +21,5 @@ git submodule update --init --recursive
 
 cd $ringgem
 for i in {1..5}; do
-    sudo task --output=prefixed --dir=$ringgem --verbose northflier --concurrency 1
+    sudo task --output=prefixed --dir=$ringgem --verbose northflier
 done
