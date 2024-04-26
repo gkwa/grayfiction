@@ -26,6 +26,10 @@ jobs:
     - name: Run `packer validate`
       id: validate
       run: packer validate -syntax-only .
+
+    - name: Pause
+      run: sleep 30s  # Add a 30-second pause before running packer build
+
     - name: Run `packer build`
       id: build
       run: packer build -force -var-file=variables.json aws-ubuntu.pkr.hcl
