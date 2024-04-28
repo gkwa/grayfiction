@@ -33,6 +33,13 @@ cd $gray
 git submodule update --depth 1 --init --recursive
 cd $ringgem
 
+for i in {1..2}; do
+    sudo task --output=prefixed --dir=$ringgem --verbose install-many-homebrew-apps
+done
+
+# get homebrew env into current context
+source ~/.bashrc
+
 for i in {1..5}; do
     sudo task --output=prefixed --dir=$ringgem --verbose northflier
 done
