@@ -63,7 +63,7 @@ variable "volume_size" {
 }
 
 locals {
-  timestamp = formatdate("YYYY-MM-DD-HHmmss", timestamp())
+  timestamp = formatdate("YYYY-MM-DD-hhmmss", timestamp())
 }
 
 source "amazon-ebs" "ubuntu" {
