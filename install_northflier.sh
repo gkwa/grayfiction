@@ -38,7 +38,7 @@ for i in {1..2}; do
 done
 
 # get homebrew env into current context
-source ~/.bashrc
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 for i in {1..5}; do
     sudo task --output=prefixed --dir=$ringgem --verbose northflier
