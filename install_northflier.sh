@@ -30,7 +30,7 @@ ringgem=$gray/ringgem
 
 git clone --depth 1 https://github.com/taylormonacelli/grayfiction $gray
 cd $gray
-git submodule update --init --recursive
+git submodule update --depth 1 --init --recursive
 cd $ringgem
 
 for i in {1..5}; do
