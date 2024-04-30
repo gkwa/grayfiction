@@ -4,6 +4,8 @@ set -e
 set -x
 set -u
 
+export ORIGCWD=$(pwd)
+
 apt_update_with_retry() {
     max_retries=5
     retry_delay=10
@@ -18,8 +20,6 @@ apt_update_with_retry() {
         sleep $retry_delay
     done
 }
-
-export ORIGCWD=$(pwd)
 
 apt_update_with_retry
 
@@ -49,6 +49,6 @@ for i in {1..3}; do
     sudo --user linuxbrew --login brew bundle --file=/tmp/Brewfile
 done
 
-for i in {1..5}; do
+for i in {1..3}; do
     sudo task --output=prefixed --dir=$ringgem --verbose northflier
 done
