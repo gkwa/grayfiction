@@ -39,7 +39,12 @@ cd $ringgem
 
 sudo task --output=prefixed --dir=$ringgem --verbose install-homebrew-on-linux
 sudo --login --user linuxbrew brew install taylormonacelli/homebrew-tools/howbob
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+old_xtrace=${-//[^x]/}
+set +x; eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [[ -n "$old_xtrace" ]]; then set -x; else set +x; fi
+
+
 howbob run --path=$ringgem/homebrew.k --output=/tmp/Brewfile
 for i in {1..3}; do
     sudo --user linuxbrew --login brew bundle --file=/tmp/Brewfile
