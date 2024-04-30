@@ -44,11 +44,15 @@ set +x
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 if [[ -n $old_xtrace ]]; then set -x; else set +x; fi
 
-howbob run --path=$ringgem/homebrew.k --output=/tmp/Brewfile
+howbob run --path=$ringgem/homebrew.k --brewfile=/tmp/Brewfile --checker=/tmp/versions.sh
 for i in {1..3}; do
     sudo --user linuxbrew --login brew bundle --file=/tmp/Brewfile
 done
 
+bash -xe /tmp/versions.sh
+
 for i in {1..3}; do
     sudo task --output=prefixed --dir=$ringgem --verbose northflier
 done
+
+rm -f /tmp/versions.sh
