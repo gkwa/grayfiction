@@ -49,6 +49,7 @@ for i in {1..3}; do
     sudo --user linuxbrew --login brew bundle --file=/tmp/Brewfile
 done
 
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 bash -xe /tmp/versions.sh
 
 for i in {1..3}; do
