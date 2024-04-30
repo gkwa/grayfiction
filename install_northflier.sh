@@ -37,12 +37,13 @@ cd $gray
 git submodule update --depth 1 --init --recursive
 cd $ringgem
 
-for i in {1..2}; do
-    sudo task --output=prefixed --dir=$ringgem --verbose install-many-homebrew-apps
-done
-
-# get homebrew env into current context
+sudo task --output=prefixed --dir=$ringgem --verbose install-homebrew-on-linux
+sudo --login --user linuxbrew brew install taylormonacelli/homebrew-tools/howbob
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+howbob --path=$ringgem/homebrew.k --output=/tmp/Brewfile
+for i in {1..3}; do
+    sudo --user linuxbrew --login brew bundle --file=/tmp/Brewfile
+done
 
 for i in {1..5}; do
     sudo task --output=prefixed --dir=$ringgem --verbose northflier
