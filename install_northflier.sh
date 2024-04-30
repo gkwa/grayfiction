@@ -5,7 +5,6 @@ set -x
 set -u
 
 apt_update_with_retry() {
-    # Retry loop for apt update
     max_retries=5
     retry_delay=10
 
@@ -41,9 +40,9 @@ sudo task --output=prefixed --dir=$ringgem --verbose install-homebrew-on-linux
 sudo --login --user linuxbrew brew install taylormonacelli/homebrew-tools/howbob
 
 old_xtrace=${-//[^x]/}
-set +x; eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-if [[ -n "$old_xtrace" ]]; then set -x; else set +x; fi
-
+set +x
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [[ -n $old_xtrace ]]; then set -x; else set +x; fi
 
 howbob run --path=$ringgem/homebrew.k --output=/tmp/Brewfile
 for i in {1..3}; do
