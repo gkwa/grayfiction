@@ -50,7 +50,7 @@ for i in {1..3}; do
 done
 
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-bash /tmp/versions.sh
+bash -e /tmp/versions.sh
 
 for i in {1..3}; do
     sudo task --output=prefixed --dir=$ringgem --verbose northflier
