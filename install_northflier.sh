@@ -8,7 +8,7 @@ export ORIGCWD=$(pwd)
 
 apt_update_with_retry() {
     max_retries=5
-    retry_delay=10
+    retry_delay=10s
 
     for ((i = 1; i <= max_retries; i++)); do
         sudo apt-get update && break
