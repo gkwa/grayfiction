@@ -7,7 +7,7 @@
  },
  "instance_type": "t3.small",
  "region": "ca-central-1",
- "volume_size": 50,
+ "volume_size": 30,
  "provision_script": "install_northflier.sh",
  "spot_price": "auto"
 }
