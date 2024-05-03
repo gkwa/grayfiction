@@ -26,10 +26,16 @@ DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes git curl
 # install go-task
 curl -fsSL https://raw.githubusercontent.com/taylormonacelli/ringgem/master/install-go-task-on-linux.sh | sudo bash
 
+pwd
+
 git clone --depth 1 https://github.com/taylormonacelli/grayfiction
 cd grayfiction
+pwd
+
 git submodule update --init --recursive
-cd grayfiction/ringgem
+cd ringgem
+pwd
+
 
 sudo task --output=prefixed --verbose install-homebrew-on-linux
 sudo --login --user linuxbrew brew install taylormonacelli/homebrew-tools/howbob
