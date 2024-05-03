@@ -33,7 +33,7 @@ ringgem=$gray/ringgem
 
 git clone --depth 1 https://github.com/taylormonacelli/grayfiction $gray
 cd $gray
-git submodule update --depth 1 --init --recursive
+git submodule update --init --recursive
 cd $ringgem
 
 sudo task --output=prefixed --dir=$ringgem --verbose install-homebrew-on-linux
