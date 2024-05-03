@@ -24,6 +24,7 @@ apt_update_with_retry
 mkdir -p /opt/grayfiction
 cd /opt/grayfiction
 
+
 DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes git curl
 
 # install go-task
