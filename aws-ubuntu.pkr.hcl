@@ -119,7 +119,7 @@ build {
   provisioner "shell" {
     inline = [
       "echo 'Prevent apt-get lock timeouts'",
-      "echo 'DPkg::Lock::Timeout "600";' | sudo tee /etc/apt/apt.conf.d/99dpkg-lock-timeout",
+      "echo 'DPkg::Lock::Timeout \"600\";' | sudo tee /etc/apt/apt.conf.d/99dpkg-lock-timeout",
     ]
   }
 
