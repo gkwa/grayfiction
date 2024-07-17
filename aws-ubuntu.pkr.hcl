@@ -78,8 +78,8 @@ source "amazon-ebs" "ubuntu" {
   vpc_id                = var.vpc_id
 
   aws_polling {
-    delay_seconds = 120  // 2 minutes
-    max_attempts  = 45   // 45 attempts * 2 minutes = 90 minutes (1.5 hours)
+    delay_seconds = 120 // 2 minutes
+    max_attempts  = 45  // 45 attempts * 2 minutes = 90 minutes (1.5 hours)
   }
 
   source_ami_filter {
