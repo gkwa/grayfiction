@@ -37,10 +37,7 @@ cd ringgem
 pwd
 
 sudo task --output=prefixed --verbose install-homebrew-on-linux
-
-export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-
-sudo --login --user linuxbrew brew install taylormonacelli/homebrew-tools/howbob
+sudo --login --user linuxbrew /home/linuxbrew/.linuxbrew/bin/brew install taylormonacelli/homebrew-tools/howbob
 
 old_xtrace=${-//[^x]/}
 set +x
@@ -49,7 +46,7 @@ if [[ -n $old_xtrace ]]; then set -x; else set +x; fi
 
 howbob run --path=homebrew.k --brewfile=/tmp/Brewfile --checker=/tmp/versions.sh
 for i in {1..3}; do
-    sudo --user linuxbrew --login brew bundle --file=/tmp/Brewfile
+    sudo --user linuxbrew --login /home/linuxbrew/.linuxbrew/bin/brew bundle --file=/tmp/Brewfile
 done
 
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
