@@ -38,12 +38,14 @@ pwd
 
 sudo task --output=prefixed --verbose install-homebrew-on-linux
 
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+
+sudo --login --user linuxbrew brew install taylormonacelli/homebrew-tools/howbob
+
 old_xtrace=${-//[^x]/}
 set +x
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 if [[ -n $old_xtrace ]]; then set -x; else set +x; fi
-
-sudo --login --user linuxbrew brew install taylormonacelli/homebrew-tools/howbob
 
 howbob run --path=homebrew.k --brewfile=/tmp/Brewfile --checker=/tmp/versions.sh
 for i in {1..3}; do
