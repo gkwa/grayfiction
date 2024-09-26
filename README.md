@@ -1,4 +1,4 @@
-# grafiction
+# grayfiction
 
 Learn to use [packer](https://www.packer.io/) to create vm images.
 
