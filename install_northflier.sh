@@ -37,7 +37,7 @@ cd ringgem
 pwd
 
 sudo task --output=prefixed --verbose install-homebrew-on-linux
-/usr/local/bin/brew install taylormonacelli/homebrew-tools/howbob
+/usr/local/bin/brew install gkwa/homebrew-tools/howbob
 
 old_xtrace=${-//[^x]/}
 set +x
