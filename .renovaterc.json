@@ -3,28 +3,22 @@
   "configMigration": true,
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
-  "extends": [
-    "config:recommended"
-  ],
+  "extends": ["config:recommended"],
   "packageRules": [
     {
-      "matchDepTypes": [
-        "*"
-      ],
+      "matchDepTypes": ["*"],
       "automerge": true,
       "automergeType": "branch",
       "automergeStrategy": "fast-forward",
-      "requiredStatusChecks": null
+      "ignoreTests": true
     },
     {
-      "matchDepTypes": [
-        "configMigration"
-      ],
+      "matchDepTypes": ["configMigration"],
       "automerge": true,
       "automergeType": "branch",
       "automergeStrategy": "fast-forward",
-      "requiredStatusChecks": null,
-      "stabilityDays": 0
+      "ignoreTests": true,
+      "minimumReleaseAge": null
     }
   ],
   "platformAutomerge": true
