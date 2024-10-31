@@ -4,23 +4,10 @@ name: packer
     branches:
     - '**'
 jobs:
-  packer:
+  packer-first-attempt:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 1
-      fail-fast: false
-      matrix:
-        attempt: [1, 2]
-    name: Run Packer (Attempt ${{ matrix.attempt }})
+    name: Packer First Attempt
     steps:
-    - name: Skip if previous attempt succeeded
-      if: matrix.attempt > 1
-      id: check_previous
-      run: |
-        if [ "${{ needs.packer.result }}" == "success" ]; then
-          echo "Skipping as previous attempt succeeded"
-          exit 0
-        fi
     - name: Checkout Repository
       uses: actions/checkout@v4
       with:
@@ -49,6 +36,43 @@ jobs:
         AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
         AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
     - name: Cleanup Packer Resources
-      if: ${{ failure() || cancelled() }}
+      if: failure() || cancelled()
+      run: |
+        pkill packer
+  packer-second-attempt:
+    needs: packer-first-attempt
+    if: failure()
+    runs-on: ubuntu-latest
+    name: Packer Second Attempt
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        submodules: 'true'
+    - name: Setup `packer`
+      uses: hashicorp/setup-packer@main
+      id: setup
+      with:
+        version: ${{ env.PRODUCT_VERSION }}
+    - name: Run `packer init`
+      id: init
+      run: packer init .
+    - name: Run `packer fmt`
+      id: fmt
+      run: packer fmt -check .
+    - name: Run `packer validate`
+      id: validate
+      run: packer validate -syntax-only .
+    - name: Run `packer build`
+      id: build
+      run: packer build -force -var-file=variables.json aws-ubuntu.pkr.hcl
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
+        AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+    - name: Cleanup Packer Resources
+      if: failure() || cancelled()
       run: |
         pkill packer
