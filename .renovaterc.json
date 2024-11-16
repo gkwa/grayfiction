@@ -1,25 +1,19 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "configMigration": true,
-  "prHourlyLimit": 0,
-  "prConcurrentLimit": 0,
-  "extends": ["config:recommended"],
+  "extends": ["config:best-practices", ":dependencyDashboard"],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "packageRules": [
     {
+      "automerge": true,
+      "automergeStrategy": "merge-commit",
       "matchDepTypes": ["*"],
-      "automerge": true,
-      "automergeType": "branch",
-      "automergeStrategy": "fast-forward",
-      "ignoreTests": true
-    },
-    {
-      "matchDepTypes": ["configMigration"],
-      "automerge": true,
-      "automergeType": "branch",
-      "automergeStrategy": "fast-forward",
-      "ignoreTests": true,
-      "minimumReleaseAge": null
+      "rangeStrategy": "pin",
+      "recreateWhen": "always"
     }
   ],
-  "platformAutomerge": true
+  "platformAutomerge": true,
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 0
 }
