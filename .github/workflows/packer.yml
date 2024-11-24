@@ -50,7 +50,7 @@ jobs:
       with:
         submodules: "true"
     - name: Setup `packer`
-      uses: hashicorp/setup-packer@main
+      uses: hashicorp/setup-packer@v3.1.0
       id: setup
       with:
         version: ${{ env.PRODUCT_VERSION }}
