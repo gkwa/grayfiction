@@ -36,7 +36,7 @@ git submodule update --init --recursive
 cd ringgem
 pwd
 
-sudo task --output=prefixed --verbose install-homebrew-on-linux
+sudo task --output=prefixed --verbose configure-homebrew-on-linux
 /usr/local/bin/brew install gkwa/homebrew-tools/howbob
 
 old_xtrace=${-//[^x]/}
