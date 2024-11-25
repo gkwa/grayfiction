@@ -2,77 +2,88 @@ name: packer
 "on":
   push:
     branches:
-    - '**'
+      - "**"
 jobs:
   packer-first-attempt:
     runs-on: ubuntu-latest
     name: Packer First Attempt
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      with:
-        submodules: "true"
-    - name: Setup `packer`
-      uses: hashicorp/setup-packer@main
-      id: setup
-      with:
-        version: ${{ env.PRODUCT_VERSION }}
-    - name: Run `packer init`
-      id: init
-      run: packer init .
-    - name: Run `packer fmt`
-      id: fmt
-      run: packer fmt -check .
-    - name: Run `packer validate`
-      id: validate
-      run: packer validate -syntax-only .
-    - name: Run `packer build`
-      id: build
-      run: packer build -force -var-file=variables.json aws-ubuntu.pkr.hcl
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
-        AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
-        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-    - name: Cleanup Packer Resources
-      if: failure() || cancelled()
-      run: |
-        pkill packer
+      - name: Checkout Repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          submodules: "true"
+      - name: Setup `packer`
+        uses: hashicorp/setup-packer@main
+        id: setup
+        with:
+          version: ${{ env.PRODUCT_VERSION }}
+      - name: Run `packer init`
+        id: init
+        run: packer init .
+      - name: Run `packer fmt`
+        id: fmt
+        run: packer fmt -check .
+      - name: Run `packer validate`
+        id: validate
+        run: packer validate -syntax-only .
+      - name: Run `packer build`
+        id: build
+        run: packer build -force -var-file=variables.json aws-ubuntu.pkr.hcl
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
+          AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Cleanup Packer Resources
+        if: failure() || cancelled()
+        run: |
+          pkill packer
   packer-second-attempt:
     needs: packer-first-attempt
     if: failure()
     runs-on: ubuntu-latest
     name: Packer Second Attempt
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      with:
-        submodules: "true"
-    - name: Setup `packer`
-      uses: hashicorp/setup-packer@v3.1.0
-      id: setup
-      with:
-        version: ${{ env.PRODUCT_VERSION }}
-    - name: Run `packer init`
-      id: init
-      run: packer init .
-    - name: Run `packer fmt`
-      id: fmt
-      run: packer fmt -check .
-    - name: Run `packer validate`
-      id: validate
-      run: packer validate -syntax-only .
-    - name: Run `packer build`
-      id: build
-      run: packer build -force -var-file=variables.json aws-ubuntu.pkr.hcl
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
-        AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
-        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-    - name: Cleanup Packer Resources
-      if: failure() || cancelled()
-      run: |
-        pkill packer
+      - name: Checkout Repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          submodules: "true"
+      - name: Setup `packer`
+        uses: hashicorp/setup-packer@v3.1.0
+        id: setup
+        with:
+          version: ${{ env.PRODUCT_VERSION }}
+      - name: Run `packer init`
+        id: init
+        run: packer init .
+      - name: Run `packer fmt`
+        id: fmt
+        run: packer fmt -check .
+      - name: Run `packer validate`
+        id: validate
+        run: packer validate -syntax-only .
+      - name: Run `packer build`
+        id: build
+        run: packer build -force -var-file=variables.json aws-ubuntu.pkr.hcl
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
+          AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Cleanup Packer Resources
+        if: failure() || cancelled()
+        run: |
+          pkill packer
+  required-check:
+    name: All Tests Passed
+    needs:
+      - packer-first-attempt
+      - packer-second-attempt
+    if: |
+      always() &&
+      (needs.packer-first-attempt.result == 'success' || needs.packer-second-attempt.result == 'success')
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "All tests passed!"
