@@ -37,8 +37,7 @@ cd ringgem
 pwd
 
 sudo task --output=prefixed --verbose configure-homebrew-on-linux
-source ~/.bashrc
-brew install gkwa/homebrew-tools/howbob
+/home/linuxbrew/.linuxbrew/bin/brew install gkwa/homebrew-tools/howbob
 
 old_xtrace=${-//[^x]/}
 set +x
@@ -47,7 +46,7 @@ if [[ -n $old_xtrace ]]; then set -x; else set +x; fi
 
 howbob run --path=homebrew.k --brewfile=/tmp/Brewfile --checker=/tmp/versions.sh
 for i in {1..3}; do
-    brew bundle --file=/tmp/Brewfile
+    /home/linuxbrew/.linuxbrew/bin/brew bundle --file=/tmp/Brewfile
 done
 
 bash -e /tmp/versions.sh
