@@ -37,6 +37,7 @@ cd ringgem
 pwd
 
 sudo task --output=prefixed --verbose configure-homebrew-on-linux
+source ~/.bashrc
 brew install gkwa/homebrew-tools/howbob
 
 old_xtrace=${-//[^x]/}
