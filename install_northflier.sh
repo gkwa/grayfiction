@@ -45,8 +45,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 if [[ -n $old_xtrace ]]; then set -x; else set +x; fi
 
 howbob run --taps=/tmp/taps.sh --path=homebrew.k --brewfile=/tmp/Brewfile --checker=/tmp/versions.sh
-chmod +rx /tmp/taps.sh
-sudo --login --user linuxbrew bash -l -xe /tmp/taps.sh
+sudo --login --user linuxbrew bash -l -e /tmp/taps.sh
 for i in {1..2}; do
     set +e
     sudo --login --user linuxbrew bash -l -c 'brew bundle --file=/tmp/Brewfile'
