@@ -39,6 +39,8 @@ pwd
 sudo task --output=prefixed --verbose configure-homebrew-on-linux
 sudo --login --user linuxbrew bash -l -c 'brew install gkwa/homebrew-tools/howbob'
 
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 old_xtrace=${-//[^x]/}
 if [[ -n $old_xtrace ]]; then set -x; else set +x; fi
 
