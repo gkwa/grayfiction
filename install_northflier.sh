@@ -49,10 +49,10 @@ chmod +rx /tmp/taps.sh
 sudo --login --user linuxbrew bash -l -xe /tmp/taps.sh
 for i in {1..2}; do
     set +e
-    sudo --login --user linuxbrew /home/linuxbrew/.linuxbrew/bin/brew bundle --file=/tmp/Brewfile
+    sudo --login --user linuxbrew bash -l -c 'brew bundle --file=/tmp/Brewfile'
     set -e
 done
-sudo --login --user linuxbrew /home/linuxbrew/.linuxbrew/bin/brew bundle --file=/tmp/Brewfile
+sudo --login --user linuxbrew bash -l -c 'brew bundle --file=/tmp/Brewfile'
 
 bash -e /tmp/versions.sh
 
