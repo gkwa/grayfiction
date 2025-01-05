@@ -37,20 +37,21 @@ cd ringgem
 pwd
 
 sudo task --output=prefixed --verbose configure-homebrew-on-linux
-sudo  --login --user linuxbrew /home/linuxbrew/.linuxbrew/bin/brew install gkwa/homebrew-tools/howbob
+sudo --login --user linuxbrew /home/linuxbrew/.linuxbrew/bin/brew install gkwa/homebrew-tools/howbob
 
 old_xtrace=${-//[^x]/}
 set +x
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 if [[ -n $old_xtrace ]]; then set -x; else set +x; fi
 
-howbob run --path=homebrew.k --brewfile=/tmp/Brewfile --checker=/tmp/versions.sh
+howbob run --taps=/tmp/taps.sh --path=homebrew.k --brewfile=/tmp/Brewfile --checker=/tmp/versions.sh
+bash -xe /tmp/taps.sh
 for i in {1..2}; do
     set +e
-    sudo  --login --user linuxbrew /home/linuxbrew/.linuxbrew/bin/brew bundle --file=/tmp/Brewfile
+    sudo --login --user linuxbrew /home/linuxbrew/.linuxbrew/bin/brew bundle --file=/tmp/Brewfile
     set -e
 done
-sudo  --login --user linuxbrew /home/linuxbrew/.linuxbrew/bin/brew bundle --file=/tmp/Brewfile
+sudo --login --user linuxbrew /home/linuxbrew/.linuxbrew/bin/brew bundle --file=/tmp/Brewfile
 
 bash -e /tmp/versions.sh
 
