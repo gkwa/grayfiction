@@ -55,8 +55,9 @@ sudo --login --user linuxbrew bash -l -c 'brew bundle --file=/tmp/Brewfile'
 
 bash -e /tmp/versions.sh
 
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 for i in {1..3}; do
-    sudo task --output=prefixed --verbose northflier
+    sudo --preserve-env task --output=prefixed --verbose northflier
 done
 
 rm -f /tmp/versions.sh
