@@ -123,6 +123,17 @@ build {
 
   provisioner "shell" {
     inline = [
+      "sudo perl -i -pe 's|^PATH=\"(.*?)\"|PATH=\"$1:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin\"|' /etc/environment"
+    ]
+  }
+
+  provisioner "shell" {
+    inline            = ["sudo reboot"]
+    expect_disconnect = true
+  }
+
+  provisioner "shell" {
+    inline = [
       "echo 'Prevent apt-get lock timeouts'",
       "echo 'DPkg::Lock::Timeout \"600\";' | sudo tee /etc/apt/apt.conf.d/99dpkg-lock-timeout",
     ]
@@ -132,11 +143,6 @@ build {
     inline = [
       "echo 'Waiting for dns...'",
       "timeout 30s curl --retry 9999 --connect-timeout 1 -sSf https://www.google.com >/dev/null",
-    ]
-  }
-  provisioner "shell" {
-    inline = [
-      "sudo perl -i -pe 's|^PATH=\"(.*?)\"|PATH=\"$1:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin\"|' /etc/environment"
     ]
   }
   provisioner "shell" {
