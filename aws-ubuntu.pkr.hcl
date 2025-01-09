@@ -134,7 +134,11 @@ build {
       "timeout 30s curl --retry 9999 --connect-timeout 1 -sSf https://www.google.com >/dev/null",
     ]
   }
-
+  provisioner "shell" {
+    inline = [
+      "sudo perl -i -pe 's|^PATH=\"(.*?)\"|PATH=\"$1:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin\"|' /etc/environment"
+    ]
+  }
   provisioner "shell" {
     environment_vars = [
       "FOO=hello world",
