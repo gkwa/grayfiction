@@ -37,9 +37,9 @@ cd ringgem
 pwd
 
 sudo task --output=prefixed --verbose configure-homebrew-on-linux
-sudo --login --user linuxbrew bash -l -c 'brew install gkwa/homebrew-tools/howbob'
+sudo --login --user linuxbrew bash -l -c 'source /etc/profile.d/homebrew.sh && brew install gkwa/homebrew-tools/howbob'
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+source /etc/profile.d/homebrew.sh
 
 old_xtrace=${-//[^x]/}
 if [[ -n $old_xtrace ]]; then set -x; else set +x; fi
@@ -55,7 +55,6 @@ sudo --login --user linuxbrew bash -l -c 'brew bundle --file=/tmp/Brewfile'
 
 bash -e /tmp/versions.sh
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 for i in {1..3}; do
     sudo --preserve-env task --output=prefixed --verbose northflier
 done
