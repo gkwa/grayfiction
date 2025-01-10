@@ -122,12 +122,6 @@ build {
   ]
 
   provisioner "shell" {
-    inline = [
-      "sudo perl -i -pe 's|^PATH=\"(.*?)\"|PATH=\"$1:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin\"|' /etc/environment"
-    ]
-  }
-
-  provisioner "shell" {
     inline            = ["sudo reboot"]
     expect_disconnect = true
   }
