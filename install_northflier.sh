@@ -28,13 +28,18 @@ curl -fsSL https://raw.githubusercontent.com/taylormonacelli/ringgem/master/inst
 
 pwd
 
-git clone --depth 1 https://github.com/taylormonacelli/grayfiction
-cd grayfiction
-pwd
+if [ -d grayfiction ]; then # testing locally
+    cd grayfiction
+    cd ringgem
+else
+    git clone --depth 1 https://github.com/taylormonacelli/grayfiction
+    cd grayfiction
+    pwd
 
-git submodule update --init --recursive
-cd ringgem
-pwd
+    git submodule update --init --recursive
+    cd ringgem
+    pwd
+fi
 
 sudo task --output=prefixed --verbose configure-homebrew-on-linux
 sudo --login --user linuxbrew bash -l -c 'source /etc/profile.d/homebrew.sh && brew install gkwa/homebrew-tools/howbob'
