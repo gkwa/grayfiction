@@ -1,0 +1,35 @@
+name: Packer Job
+on:
+  workflow_call:
+    inputs:
+      packer-version:
+        type: string
+        required: true
+
+jobs:
+  packer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          submodules: "true"
+      - uses: hashicorp/setup-packer@main
+        id: setup
+        with:
+          version: ${{ inputs.packer-version }}
+      - run: packer init .
+        id: init
+      - run: packer fmt -check .
+        id: fmt
+      - run: packer validate -syntax-only .
+        id: validate
+      - run: packer build -force -var-file=variables.json aws-ubuntu.pkr.hcl
+        id: build
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
+          AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+      - if: failure() || cancelled()
+        run: pkill packer
