@@ -1,24 +1,29 @@
 name: packer
-on:
+"on":
   push:
     branches:
       - "**"
-
 jobs:
   first-attempt:
     uses: ./.github/workflows/packer-job.yml
     with:
       packer-version: ${{ env.PRODUCT_VERSION }}
-
   second-attempt:
     needs: first-attempt
     if: failure()
     uses: ./.github/workflows/packer-job.yml
     with:
       packer-version: ${{ env.PRODUCT_VERSION }}
-
+  third-attempt:
+    needs: first-attempt
+    if: failure()
+    uses: ./.github/workflows/packer-job.yml
+    with:
+      packer-version: ${{ env.PRODUCT_VERSION }}
   required-check:
-    needs: [first-attempt, second-attempt]
+    needs:
+      - first-attempt
+      - second-attempt
     if: |
       always() &&
       (needs.first-attempt.result == 'success' || needs.second-attempt.result == 'success')
