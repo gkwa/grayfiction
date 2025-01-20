@@ -1,6 +1,10 @@
 name: Packer Job
 "on":
   workflow_call:
+    outputs:
+      success:
+        description: Whether the packer build succeeded
+        value: ${{ jobs.packer.outputs.success }}
     inputs:
       packer-version:
         type: string
@@ -9,6 +13,8 @@ name: Packer Job
 jobs:
   packer:
     runs-on: ubuntu-latest
+    outputs:
+      success: ${{ steps.set-result.outputs.success }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
@@ -33,3 +39,5 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
       - if: failure() || cancelled()
         run: pkill packer
+      - id: set-result
+        run: echo "success=${{ steps.build.outcome == 'success' }}" >> "$GITHUB_OUTPUT"
