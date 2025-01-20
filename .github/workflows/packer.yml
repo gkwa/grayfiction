@@ -9,7 +9,7 @@ jobs:
     name: Packer First Attempt
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           submodules: "true"
       - name: Setup `packer`
@@ -46,11 +46,11 @@ jobs:
     name: Packer Second Attempt
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           submodules: "true"
       - name: Setup `packer`
-        uses: hashicorp/setup-packer@1aa358be5cf73883762b302a3a03abd66e75b232
+        uses: hashicorp/setup-packer@76e3039aa951aa4e6efe7e6ee06bc9ceb072142d
         id: setup
         with:
           version: ${{ env.PRODUCT_VERSION }}
@@ -83,11 +83,11 @@ jobs:
     name: Packer Third Attempt
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           submodules: "true"
       - name: Setup `packer`
-        uses: hashicorp/setup-packer@1aa358be5cf73883762b302a3a03abd66e75b232
+        uses: hashicorp/setup-packer@76e3039aa951aa4e6efe7e6ee06bc9ceb072142d
         id: setup
         with:
           version: ${{ env.PRODUCT_VERSION }}
@@ -120,11 +120,11 @@ jobs:
     name: Packer Fourth Attempt
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           submodules: "true"
       - name: Setup `packer`
-        uses: hashicorp/setup-packer@1aa358be5cf73883762b302a3a03abd66e75b232
+        uses: hashicorp/setup-packer@76e3039aa951aa4e6efe7e6ee06bc9ceb072142d
         id: setup
         with:
           version: ${{ env.PRODUCT_VERSION }}
