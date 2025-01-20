@@ -6,14 +6,17 @@ name: packer
 jobs:
   attempt-1:
     uses: ./.github/workflows/packer-job.yml
+
   attempt-2:
     needs: attempt-1
     if: needs.attempt-1.outputs.success != 'true'
     uses: ./.github/workflows/packer-job.yml
+
   attempt-3:
     needs: attempt-2
     if: needs.attempt-2.outputs.success != 'true'
     uses: ./.github/workflows/packer-job.yml
+
   required-check:
     needs:
       - attempt-1
@@ -22,9 +25,9 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - if: needs.attempt-1.result == 'success' || needs.attempt-2.result == 'success'
+      - if: needs.attempt-1.result == 'success' || needs.attempt-2.result == 'success' || needs.attempt-3.result == 'success'
         run: echo "Build succeeded!"
-      - if: needs.attempt-1.result != 'success' && needs.attempt-2.result != 'success'
+      - if: needs.attempt-1.result != 'success' && needs.attempt-2.result != 'success' && needs.attempt-3.result != 'success'
         run: |
           echo "All attempts failed"
           exit 1
