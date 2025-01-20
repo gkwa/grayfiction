@@ -4,7 +4,8 @@ name: Packer Job
     inputs:
       packer-version:
         type: string
-        required: true
+        default: 1.9.4
+        required: false
 jobs:
   packer:
     runs-on: ubuntu-latest
