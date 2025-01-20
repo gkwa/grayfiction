@@ -11,8 +11,8 @@ jobs:
     if: needs.attempt-1.outputs.success != 'true'
     uses: ./.github/workflows/packer-job.yml
   attempt-3:
-    needs: attempt-1
-    if: needs.attempt-1.outputs.success != 'true'
+    needs: attempt-2
+    if: needs.attempt-2.outputs.success != 'true'
     uses: ./.github/workflows/packer-job.yml
   required-check:
     needs:
