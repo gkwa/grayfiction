@@ -41,7 +41,7 @@ jobs:
           pkill packer
   packer-second-attempt:
     needs: packer-first-attempt
-    if: failure()
+    if: needs.packer-first-attempt.result == 'failure'
     runs-on: ubuntu-latest
     name: Packer Second Attempt
     steps:
@@ -78,7 +78,7 @@ jobs:
           pkill packer
   packer-third-attempt:
     needs: packer-second-attempt
-    if: failure()
+    if: needs.packer-second-attempt.result == 'failure'
     runs-on: ubuntu-latest
     name: Packer Third Attempt
     steps:
@@ -115,7 +115,7 @@ jobs:
           pkill packer
   packer-fourth-attempt:
     needs: packer-third-attempt
-    if: failure()
+    if: needs.packer-third-attempt.result == 'failure'
     runs-on: ubuntu-latest
     name: Packer Fourth Attempt
     steps:
@@ -151,7 +151,7 @@ jobs:
         run: |
           pkill packer
   required-check:
-    name: All Tests Passed
+    name: At least one test passed
     needs:
       - packer-first-attempt
       - packer-second-attempt
