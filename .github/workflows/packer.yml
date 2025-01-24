@@ -9,7 +9,7 @@ jobs:
     name: Packer First Attempt
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           submodules: "true"
       - name: Setup `packer`
@@ -41,90 +41,16 @@ jobs:
           pkill packer
   packer-second-attempt:
     needs: packer-first-attempt
-    if: needs.packer-first-attempt.result == 'failure'
+    if: failure()
     runs-on: ubuntu-latest
     name: Packer Second Attempt
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           submodules: "true"
       - name: Setup `packer`
-        uses: hashicorp/setup-packer@76e3039aa951aa4e6efe7e6ee06bc9ceb072142d
-        id: setup
-        with:
-          version: ${{ env.PRODUCT_VERSION }}
-      - name: Run `packer init`
-        id: init
-        run: packer init .
-      - name: Run `packer fmt`
-        id: fmt
-        run: packer fmt -check .
-      - name: Run `packer validate`
-        id: validate
-        run: packer validate -syntax-only .
-      - name: Run `packer build`
-        id: build
-        run: packer build -force -var-file=variables.json aws-ubuntu.pkr.hcl
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
-          AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Cleanup Packer Resources
-        if: failure() || cancelled()
-        run: |
-          pkill packer
-  packer-third-attempt:
-    needs: packer-second-attempt
-    if: needs.packer-second-attempt.result == 'failure'
-    runs-on: ubuntu-latest
-    name: Packer Third Attempt
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
-        with:
-          submodules: "true"
-      - name: Setup `packer`
-        uses: hashicorp/setup-packer@76e3039aa951aa4e6efe7e6ee06bc9ceb072142d
-        id: setup
-        with:
-          version: ${{ env.PRODUCT_VERSION }}
-      - name: Run `packer init`
-        id: init
-        run: packer init .
-      - name: Run `packer fmt`
-        id: fmt
-        run: packer fmt -check .
-      - name: Run `packer validate`
-        id: validate
-        run: packer validate -syntax-only .
-      - name: Run `packer build`
-        id: build
-        run: packer build -force -var-file=variables.json aws-ubuntu.pkr.hcl
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
-          AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Cleanup Packer Resources
-        if: failure() || cancelled()
-        run: |
-          pkill packer
-  packer-fourth-attempt:
-    needs: packer-third-attempt
-    if: needs.packer-third-attempt.result == 'failure'
-    runs-on: ubuntu-latest
-    name: Packer Fourth Attempt
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
-        with:
-          submodules: "true"
-      - name: Setup `packer`
-        uses: hashicorp/setup-packer@76e3039aa951aa4e6efe7e6ee06bc9ceb072142d
+        uses: hashicorp/setup-packer@1aa358be5cf73883762b302a3a03abd66e75b232 # v3.1.0
         id: setup
         with:
           version: ${{ env.PRODUCT_VERSION }}
@@ -151,15 +77,13 @@ jobs:
         run: |
           pkill packer
   required-check:
-    name: At least one test passed
+    name: All Tests Passed
     needs:
       - packer-first-attempt
       - packer-second-attempt
-      - packer-third-attempt
-      - packer-fourth-attempt
     if: |
       always() &&
-      (needs.packer-first-attempt.result == 'success' || needs.packer-second-attempt.result == 'success' || needs.packer-third-attempt.result == 'success' || needs.packer-fourth-attempt.result == 'success')
+      (needs.packer-first-attempt.result == 'success' || needs.packer-second-attempt.result == 'success')
     runs-on: ubuntu-latest
     steps:
       - run: echo "All tests passed!"
