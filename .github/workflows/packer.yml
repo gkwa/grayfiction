@@ -77,7 +77,7 @@ jobs:
         run: |
           pkill packer
   required-check:
-    name: All Tests Passed
+    name: At least one test passed
     needs:
       - packer-first-attempt
       - packer-second-attempt
