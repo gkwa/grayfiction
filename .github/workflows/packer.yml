@@ -86,4 +86,4 @@ jobs:
       (needs.packer-first-attempt.result == 'success' || needs.packer-second-attempt.result == 'success')
     runs-on: ubuntu-latest
     steps:
-      - run: echo "All tests passed!"
+      - run: echo "At least one test passed!"
