@@ -3,13 +3,6 @@ name: packer
   push:
     branches:
       - "**"
-env:
-  PACKER_ENV:
-    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
-    AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
-    AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 jobs:
   packer-first-attempt:
     runs-on: ubuntu-latest
@@ -36,7 +29,12 @@ jobs:
       - name: Run `packer build`
         id: build
         run: packer build -force -var-file=variables.json aws-ubuntu.pkr.hcl
-        env: ${{ env.PACKER_ENV }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
+          AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Cleanup Packer Resources
         if: failure() || cancelled()
         run: |
@@ -68,7 +66,12 @@ jobs:
       - name: Run `packer build`
         id: build
         run: packer build -force -var-file=variables.json aws-ubuntu.pkr.hcl
-        env: ${{ env.PACKER_ENV }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
+          AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Cleanup Packer Resources
         if: failure() || cancelled()
         run: |
@@ -100,7 +103,12 @@ jobs:
       - name: Run `packer build`
         id: build
         run: packer build -force -var-file=variables.json aws-ubuntu.pkr.hcl
-        env: ${{ env.PACKER_ENV }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
+          AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Cleanup Packer Resources
         if: failure() || cancelled()
         run: |
