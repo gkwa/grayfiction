@@ -41,7 +41,7 @@ jobs:
           pkill packer
   packer-second-attempt:
     needs: packer-first-attempt
-    if: failure()
+    if: needs.packer-first-attempt.result == 'failure'
     runs-on: ubuntu-latest
     name: Packer Second Attempt
     steps:
