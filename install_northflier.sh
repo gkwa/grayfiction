@@ -46,6 +46,18 @@ sudo --login --user linuxbrew bash -l -c 'source /etc/profile.d/homebrew.sh && b
 
 source /etc/profile.d/homebrew.sh
 
+python3 -c "
+import os
+
+for i, p in enumerate(os.environ.get('PATH', '').split(os.pathsep), 1):
+   print(f'[{i}] {p}')
+   try:
+       files = [f for f in os.listdir(p) if os.path.isfile(os.path.join(p, f))][:5]
+       print(f'    {len(files)} files: {\" \".join(files)}')
+   except:
+       print('    (no access)')
+"
+
 old_xtrace=${-//[^x]/}
 if [[ -n $old_xtrace ]]; then set -x; else set +x; fi
 
