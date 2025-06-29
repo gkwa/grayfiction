@@ -52,7 +52,7 @@ import os
 for i, p in enumerate(os.environ.get('PATH', '').split(os.pathsep), 1):
    print(f'[{i}] {p}')
    try:
-       files = [f for f in os.listdir(p) if os.path.isfile(os.path.join(p, f))][:5]
+       files = [f for f in os.listdir(p) if os.path.isfile(os.path.join(p, f))]
        print(f'    {len(files)} files: {\" \".join(files)}')
    except:
        print('    (no access)')
