@@ -70,7 +70,7 @@ for i in {1..2}; do
 done
 sudo --login --user linuxbrew bash -l -c 'brew bundle --file=/tmp/Brewfile'
 
-sudo bash -e /tmp/versions.sh
+sudo PATH="/home/linuxbrew/.linuxbrew/bin:$PATH" bash -e /tmp/versions.sh
 
 for i in {1..3}; do
     sudo --preserve-env task --output=prefixed --verbose northflier
