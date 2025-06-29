@@ -1,7 +1,7 @@
 {
   "ami_name_prefix": "northflier",
   "source_ami": {
-    "filter_name": "ubuntu/images/*ubuntu-focal-*-amd64-server-*",
+    "filter_name": "ubuntu/images/*ubuntu-noble-*-amd64-server-*",
     "owners": ["099720109477"],
     "ssh_username": "ubuntu"
   },

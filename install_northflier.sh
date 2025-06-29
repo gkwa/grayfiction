@@ -49,7 +49,7 @@ source /etc/profile.d/homebrew.sh
 old_xtrace=${-//[^x]/}
 if [[ -n $old_xtrace ]]; then set -x; else set +x; fi
 
-howbob run --taps=/tmp/taps.sh --path=homebrew.k --brewfile=/tmp/Brewfile --checker=/tmp/versions.sh
+sudo /home/linuxbrew/.linuxbrew/bin/howbob run --taps=/tmp/taps.sh --path=homebrew.k --brewfile=/tmp/Brewfile --checker=/tmp/versions.sh
 sudo --login --user linuxbrew bash -l -e /tmp/taps.sh
 for i in {1..2}; do
     set +e
