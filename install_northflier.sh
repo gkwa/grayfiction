@@ -76,4 +76,4 @@ for i in {1..3}; do
     sudo --preserve-env task --output=prefixed --verbose northflier
 done
 
-rm -f /tmp/versions.sh
+sudo rm -f /tmp/versions.sh
