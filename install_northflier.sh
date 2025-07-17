@@ -21,6 +21,8 @@ apt_update_with_retry() {
 
 apt_update_with_retry
 
+apt-get -y upgrade
+
 DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes git curl
 
 # install go-task
