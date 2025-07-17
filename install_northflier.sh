@@ -19,9 +19,24 @@ apt_update_with_retry() {
     done
 }
 
+apt_upgrade_with_retry() {
+    max_retries=5
+    retry_delay=10s
+
+    for ((i = 1; i <= max_retries; i++)); do
+        sudo apt-get -y upgrade && break
+        if [ $i -eq $max_retries ]; then
+            echo "Failed to run apt upgrade after $max_retries attempts. Exiting."
+            exit 1
+        fi
+        echo "apt upgrade failed. Retrying in $retry_delay seconds... (Attempt $i/$max_retries)"
+        sleep $retry_delay
+    done
+}
+
 apt_update_with_retry
 
-apt-get -y upgrade
+apt_upgrade_with_retry
 
 DEBIAN_FRONTEND=noninteractive sudo apt-get install --assume-yes git curl
 
