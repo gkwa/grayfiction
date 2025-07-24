@@ -17,6 +17,11 @@ variable "subnet_id" {
   default = env("AWS_SUBNET_ID")
 }
 
+variable "region" {
+  type    = string
+  default = env("AWS_DEFAULT_REGION")
+}
+
 variable "ami_name_prefix" {
   type = string
 }
@@ -35,11 +40,6 @@ variable "instance_type" {
 
 variable "provision_script" {
   type = string
-}
-
-variable "region" {
-  type    = string
-  default = env("AWS_DEFAULT_REGION")
 }
 
 variable "spot_price" {
